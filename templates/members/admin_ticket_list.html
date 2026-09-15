@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load jformat %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>همه تیکت ها</title>
+</head>
+<body>
+    {% block content %}
+    <h2>🎫 همه‌ی تیکت‌ها</h2>
+    <ul class="list-group">
+        {% for ticket in tickets %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'members:ticket_detail' ticket.id %}">{{ ticket.subject }}</a>
+                <span>
+                    {{ ticket.user.username }} - {{ ticket.created_at|jformat:"%Y/%m/%d" }}
+                    {% if ticket.is_resolved %}✅{% else %}⏳{% endif %}
+                </span>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-muted">هیچ تیکتی ثبت نشده.</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

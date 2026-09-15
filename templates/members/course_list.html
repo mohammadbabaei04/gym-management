@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست دوره ها</title>
+</head>
+<body>
+    {% block content %}
+    <h1 class="text-center mb-4">📋 لیست دوره‌ها</h1>
+
+    <!-- ====== صفحه‌بندی ====== -->
+    <div class="pagination mt-4">
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">اول</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">قبلی</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">بعدی</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">آخر</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ====== باکس جستجو ====== -->
+    <form method="get" action="{% url 'members:course_list' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="🔍 جستجوی دوره..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-primary">جستجو</button>
+        </div>
+    </form>
+
+    <!-- دکمه دوره جدید (فقط برای مدیر) -->
+    {% if user.is_staff %}
+        <div class="text-end mb-3">
+            <a href="{% url 'members:add_course' %}" class="btn btn-success">➕ دوره جدید</a>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.name }}</h5>
+                    <p class="card-text">{{ course.description|truncatewords:10 }}</p>
+                    <p><strong>💰 {{ course.price }}</strong> تومان</p>
+                    <a href="{% url 'members:course_detail' course.id %}" class="btn btn-primary">جزئیات</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center text-muted">هیچ دوره‌ای پیدا نشد.</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+
+</body>
+</html>

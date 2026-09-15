@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست اعضا</title>
+</head>
+<body>
+    <h1>📋 لیست اعضا</h1>
+    <ul>
+        {% for member in members %}
+            <li>
+                <a href="/members/{{ member.id }}/">{{ member.user.username }}</a>
+                - {{ member.phone }}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/courses/">🔙 دوره‌ها</a>
+</body>
+</html>

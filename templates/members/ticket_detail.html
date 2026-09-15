@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load jformat %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پاسخ ها</title>
+</head>
+<body>
+    {% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h2>{{ ticket.subject }}</h2>
+            <p>{{ ticket.message }}</p>
+            <small class="text-muted">📅 {{ ticket.created_at|jformat:"%Y/%m/%d" }}</small>
+            <hr>
+
+            <h3>💬 پاسخ‌ها:</h3>
+            {% for reply in replies %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <strong>{{ reply.user.username }}:</strong>
+                        <p>{{ reply.message }}</p>
+                        <small class="text-muted">{{ reply.created_at|jformat:"%Y/%m/%d" }}</small>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">هنوز پاسخی داده نشده.</p>
+            {% endfor %}
+
+            {% if user.is_staff %}
+                <hr>
+                <h4>✏️ ارسال پاسخ:</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">ارسال پاسخ</button>
+                </form>
+            {% endif %}
+
+            <a href="{% url 'members:ticket_list' %}" class="btn btn-secondary mt-3">🔙 بازگشت</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

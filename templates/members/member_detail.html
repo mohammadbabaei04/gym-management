@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load jformat %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{member.user.username}}</title>
+</head>
+<body>
+    {% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">👤 {{ member.user.username }}</h1>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">📞 تلفن: {{ member.phone }}</li>
+                <li class="list-group-item">📍 آدرس: {{ member.address }}</li>
+                <li class="list-group-item">📅 تاریخ عضویت: {{ member.joined_at|jformat:"%Y/%m/%d" }}</li>
+            </ul>
+            <a href="{% url 'members:member_list' %}" class="btn btn-secondary mt-3">🔙 بازگشت</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
