@@ -31,8 +31,44 @@
 
 ## 🚀 نصب و اجرا
 
-### ۱. کلون کردن پروژه
+۱. git clone URL
+۲. python -m venv venv
+۳. venv\Scripts\activate (ویندوز)
+۴. pip install django djangorestframework django-jalali
+۵. python manage.py makemigrations
+۶. python manage.py migrate
+۷. python manage.py createsuperuser
+۸. python manage.py runserver
+۹. برو به: http://127.0.0.1:8000/courses/
 
-```bash
-git clone https://github.com/mohammadbabaei04/gym-management.git
-cd gym-management
+---
+
+## 📂 ساختار پروژه
+## 📂 ساختار پروژه
+gym-management/
+├── core/ # تنظیمات اصلی
+├── members/ # مدیریت اعضا، دوره‌ها، تیکت‌ها
+├── accounts/ # ورود و ثبت‌نام
+└── templates/ # قالب‌های HTML
+
+
+
+---
+
+## 🔗 API
+
+| `/api/courses/` | لیست دوره‌ها |
+| `/api/courses/<id>/` | جزئیات یک دوره |
+
+---
+
+## 👨‍💻 نویسنده
+
+**Mohammad Babaei**  
+[GitHub](https://github.com/mohammadbabaei04)
+
+---
+
+## 📄 لایسنس
+
+این پروژه تحت لایسنس MIT منتشر شده است.
