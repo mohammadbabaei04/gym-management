@@ -30,7 +30,7 @@
 ---
 
 ## 🚀 نصب و اجرا
-
+```
 ۱. git clone URL
 ۲. python -m venv venv
 ۳. venv\Scripts\activate (ویندوز)
@@ -41,6 +41,7 @@
 ۸. python manage.py runserver
 ۹. برو به: http://127.0.0.1:8000/courses/
 
+```
 ---
 
 ## 📂 ساختار پروژه
