@@ -74,16 +74,19 @@
             <a class="navbar-brand" href="{% url 'members:course_list' %}">🏋️ باشگاه</a>
             <div class="user-info">
                 {% if user.is_authenticated %}
-                        <span class="text-white">👋 {{ user.username }}</span>
-                        <a href="{% url 'members:ticket_list' %}" class="btn btn-outline-light btn-sm">🎫 پشتیبانی</a>
+                    <span class="text-white">👋 {{ user.username }}</span>
+                    {% if user.is_staff %}
+                        <a href="{% url 'members:dashboard' %}" class="btn btn-outline-light btn-sm">📊 داشبورد</a>
+                    {% endif %}
+                    <a href="{% url 'members:ticket_list' %}" class="btn btn-outline-light btn-sm">🎫 پشتیبانی</a>
                     {% if user.is_staff %}
                         <a href="{% url 'members:admin_ticket_list' %}" class="btn btn-outline-light btn-sm">📋 تیکت‌های مدیر</a>
                     {% endif %}
-                        <a href="{% url 'members:edit_profile' %}" class="btn btn-outline-light btn-sm">✏️ ویرایش پروفایل</a>
-                        <a href="/accounts/logout/" class="btn btn-outline-light btn-sm">🚪 خروج</a>
+                    <a href="{% url 'members:edit_profile' %}" class="btn btn-outline-light btn-sm">✏️ ویرایش پروفایل</a>
+                    <a href="/accounts/logout/" class="btn btn-outline-light btn-sm">🚪 خروج</a>
                 {% else %}
-                        <a href="/accounts/login/" class="btn btn-outline-light btn-sm">🔑 ورود</a>
-                        <a href="/accounts/signup/" class="btn btn-light btn-sm">📝 ثبت‌نام</a>
+                    <a href="/accounts/login/" class="btn btn-outline-light btn-sm">🔑 ورود</a>
+                    <a href="/accounts/signup/" class="btn btn-light btn-sm">📝 ثبت‌نام</a>
                 {% endif %}
             </div>
         </div>

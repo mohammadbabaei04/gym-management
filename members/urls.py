@@ -2,7 +2,7 @@ from django.urls import path
 from .views import CourseDetailView, CourseListView, MemberDetailView, MemberListView
 from .views import register_for_course, edit_profile, admin_required, add_course
 from .views import edit_course, delete_course, ticket_list, ticket_create, ticket_detail,admin_ticket_list
-from .views import CourseDetailAPI, CourseListAPI
+from .views import CourseDetailAPI, CourseListAPI, dashboard
 
 app_name = 'members'
 
@@ -22,4 +22,5 @@ urlpatterns = [
     path('manage/tickets/', admin_ticket_list, name='admin_ticket_list'),
     path('api/courses/', CourseListAPI.as_view(), name='api_course_list'),
     path('api/courses/<int:pk>/', CourseDetailAPI.as_view(), name='api_course_detail'),
+    path('dashboard', dashboard, name='dashboard'),
     ]

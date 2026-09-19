@@ -7,6 +7,7 @@ from .decorators import admin_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import CourseSerializer
+from django.db.models import Sum
 
 
 # ---------------------لیست دوره ها-----------------------------------------
@@ -107,7 +108,7 @@ def edit_course(request, pk):
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
-            return redirect('members:course_detail', pk=course.id)
+            return redirect('members:course_detail', pk=pk)
     else:
         form = CourseForm(instance=course)
     return render(request, 'members/edit_course.html', {'form': form, 'course': course})
@@ -193,3 +194,26 @@ class CourseDetailAPI(APIView):
         course = get_object_or_404(Course, pk=pk)
         serializer = CourseSerializer(course)
         return Response(serializer.data)
+    
+
+
+
+# -----------------------API----------------------------------------
+@admin_required
+def dashboard(request):
+    members_count = Member.objects.count()
+    courses_count = Course.objects.count()
+    registrations_count = Registration.objects.count()
+    tickets_count = Ticket.objects.filter(is_resolved=False).count()
+    total_income = Registration.objects.aggregate(
+        total=Sum('course__price')
+    )['total'] or 0
+
+    context = {
+        'members_count': members_count,
+        'courses_count': courses_count,
+        'registrations': registrations_count,
+        'tickets_count': tickets_count,
+        'total_income': total_income,
+    }
+    return render(request, 'members/dashboard.html', context)
