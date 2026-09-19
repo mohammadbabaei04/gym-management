@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_jalali.db import models as jmodels
 
 
 class Member(models.Model):
@@ -18,8 +19,8 @@ class Course(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     capacity = models.IntegerField()
-    start_data = models.DateTimeField()
-    end_data = models.DateTimeField()
+    start_data = jmodels.jDateTimeField()
+    end_data = jmodels.jDateTimeField()
 
     def __str__(self):
         return self.name

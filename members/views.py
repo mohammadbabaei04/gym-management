@@ -198,7 +198,7 @@ class CourseDetailAPI(APIView):
 
 
 
-# -----------------------API----------------------------------------
+# -----------------------داشبورد----------------------------------------
 @admin_required
 def dashboard(request):
     members_count = Member.objects.count()
@@ -217,3 +217,12 @@ def dashboard(request):
         'total_income': total_income,
     }
     return render(request, 'members/dashboard.html', context)
+
+
+
+
+# -----------------------لیست ثبتنام ها----------------------------------------
+@admin_required
+def registration_list(request):
+    registrations = Registration.objects.all().order_by('-registered_at')
+    return render(request, 'members/registration_list.html', {'registrations': registrations})
